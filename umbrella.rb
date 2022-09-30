@@ -36,7 +36,7 @@ latitude = first_result.fetch("geometry").fetch("location").fetch("lat");
 
 longitude = first_result.fetch("geometry").fetch("location").fetch("lng");
 
-puts "Checking the weather in Chicago...."
+puts "Checking the weather in #{user_location}...."
 
 puts "Your coordinates are #{latitude}, #{longitude}"
 
