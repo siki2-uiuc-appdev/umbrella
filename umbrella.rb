@@ -1,14 +1,23 @@
 require "open-uri"
 require "json"
 
+40.times do 
+  print "="
+end
+print "\n"
+puts "  Will you need an umbrella today? "
+40.times do 
+  print "="
+end
+print "\n"
+print "\n"
 
-p "Where are you?"
+puts "Where are you?"
 
 user_location = gets.chomp
 
 # user_location = "200 S Wacker"
 
-p user_location
 
 gmaps_api_url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{user_location}&key=AIzaSyD8RrOFB0dPsF-leqeFJdmX3yOvcQbfNyY"
 
@@ -27,6 +36,10 @@ latitude = first_result.fetch("geometry").fetch("location").fetch("lat");
 
 longitude = first_result.fetch("geometry").fetch("location").fetch("lng");
 
+puts "Checking the weather in Chicago...."
+
+puts "Your coordinates are #{latitude}, #{longitude}"
+
 darksky_api_url = "https://api.darksky.net/forecast/26f63e92c5006b5c493906e7953da893/#{latitude},#{longitude}"
 
 raw_darksky_data = URI.open(darksky_api_url).read
@@ -37,7 +50,7 @@ current_temp = parsed_darksky_data.fetch("currently").fetch("temperature")
 
 weather_summary = parsed_darksky_data.fetch("currently").fetch("summary")
 
-p "It is currently #{current_temp}°F and will be #{weather_summary.downcase} for the next hour"
+puts "It is currently #{current_temp}°F and will be #{weather_summary.downcase} for the next hour"
 
 hourly_data = parsed_darksky_data.fetch("hourly").fetch("data")
 
@@ -69,16 +82,16 @@ needUmbrella = false
 
 precip_probability.each_with_index do |value, index|
   if precip_probability[index] > 0.10
-    p "In #{index} hours, there is a #{precip_probability[index]} chance of precipitation"
+    puts "In #{index} hours, there is a #{precip_probability[index]} chance of precipitation"
   else
-   p "You probably won't need an umbrella today."
+   puts "You probably won't need an umbrella today."
    break
   end
   needUmbrella = true
 end
 
 if needUmbrella
-  p "You might want to take an umbrella!"
+  puts "You might want to take an umbrella!"
 end
 
 # p parsed_data.fetch("results").at(0).fetch("geometry").fetch("location")
